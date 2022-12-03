@@ -1,0 +1,20 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+package Aplicação{
+  (Alterar Senha) as (altera) <<C02>>
+  (Realizar Cadastro) as (cadastro) <<C01>>
+  (Realizar Login) as (login) <<C03>>
+  (Gerenciar Perfil) as (gerencia)  <<C04>>
+}
+
+(cadastro) .> (altera) : extends
+(cadastro) .> (login) : extends
+(login) .> (gerencia) : include
+
+Usuario ---> (altera)
+Usuario --> (cadastro)
+Usuario ---> (login)
+Usuario ----> (gerencia)
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+package Aplicação{
+  (Monitorar tempo) as (tempo) <<C06>>
+  (Realizar pagamento) as (pagar) <<C05>>
+  (Monitorar valor) as (valor) <<C07>>
+}
+
+(pagar) .> (tempo) : include
+(pagar) .> (valor) : include
+
+Motorista ---> (tempo)
+Motorista ---> (pagar)
+Motorista ---> (valor)
+
+:Main Admin: as Admin
+Admin -up-> (tempo)
+Admin -left->  (valor)
+@enduml
