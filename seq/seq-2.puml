@@ -1,0 +1,40 @@
+@startuml
+participant Cancela as catraca
+boundary    Aplicação as app
+control     ControlerPagamento as controler
+entity      EntidadeUsuario as user
+database    Banco as bd
+boundary    PaymentGateway as pagamento
+
+alt successful
+
+catraca -> app ++ : <<URL>> GET/paga?placa=%
+app -> controler ++: paga(placa)
+controler-> user ++: paga(placa)
+alt successful
+user-> bd ++: SELECT estaciona, cartao
+bd--> user: 200 success
+user--> controler: 200 success
+controler-> pagamento++ : <<URL>> POST/payment?creditCard=%
+
+pagamento--> controler: 200 success
+controler--> app: 200 success
+app --> catraca: 200 success
+
+
+else unauthorized
+bd--> user--: 403 unauthorized
+user--> controler--: 403 unauthorized
+controler--> app: 403 unauthorized
+app --> catraca: 403 unauthorized
+
+end
+
+else error
+pagamento--> controler --: 500 error
+controler--> app --: 500 error
+app --> catraca --: 500 error
+
+end
+ 
+@enduml
