@@ -19,10 +19,13 @@ controler--> app: 200 success
 app --> catraca: 200 success
 
 else unauthorized
-bd--> user: 403 unauthorized
 user--> controler: 403 unauthorized
-controler--> app: 403 unauthorized
-app --> catraca: 403 unauthorized
+controler--> user: usuarioTemporario(placa)
+user-> bd: INSERT Usuário
+bd--> user: 201 success
+user--> controler: 201 success
+controler--> app: 201 success
+app --> catraca: 201 success
 
 else error
 bd--> user --: 500 error
