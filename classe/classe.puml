@@ -1,0 +1,59 @@
+@startuml
+
+class Carro{
+ -placa: String
+ -cor: String
+ -modelo: String
+ -marca: String
+}
+
+class Vaga{
+ -idVaga: int
+ -status: boolean
+ -tipo: String
+}
+
+class Cartao{
+ -numero: String
+ -titular: String
+ -codigo: String
+ -dataVencimento: String
+ -primario: String
+}
+
+class Usuario{
+ -email: String
+ -nome: String
+ -telefone: String
+ -isAdmin: boolean
+ -cpf: int
+ -matricula: int
+ -listaCartao: [Carta]
+ -listaCarro: [Carro]
+ -historicoRegistro: [Registro]
+ +bool login()
+ +bool logOut()
+ +void recuperarSenha()
+}
+
+
+class Registro{
+ -carro: Carro
+ -entrada: DateTime
+ -saida: DateTime
+ -preco: Float
+ -statusPagamento: bool
+ -provavelVaga: Vaga
+ +float geraPrecoFinal()
+}
+
+
+
+Usuario o-- Carro
+Usuario o-- Cartao
+Usuario "0..*" -- "1" Registro 
+Carro "1..*" -  Registro 
+Registro  - "1..*" Cartao
+Registro  -- "1..*" Vaga
+
+@enduml
