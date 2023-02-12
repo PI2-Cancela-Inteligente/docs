@@ -1,20 +1,17 @@
 @startuml
 cloud stripe
 
-package "Docker Compose"{
- package "Docker - App"{
+
+package "Aplicação web"{
+ package "Oracle"{
   component "Next Js"
- }
- database PostgreSQL
- package "Docker - Api" {
+  database PostgreSQL
   component "Fast Api"
  }
 }
 
-
 package Cancela{
  component "Raspberry Pi 3"{
-  component "Fast Api Server"
   component "Detecção de Placas" 
   component OCR
  }
@@ -25,22 +22,19 @@ package Cancela{
 package Estacionamento{
  component ESP32
  component "Hc-sr04 1"
- component "Hc-sr04 .."
  component "Hc-sr04 N"
 }
 
 "Fast Api" -> stripe 
 "Next Js" <--> "Fast Api"
 PostgreSQL <-- "Fast Api"
-"Fast Api" <--> "Fast Api Server"
+"Fast Api" <--> "Raspberry Pi 3"
 "Fast Api" <--- ESP32
 
-"Fast Api Server" --> Motor
+"Raspberry Pi 3" --> Motor
 "Detecção de Placas" -> Camera
 "Detecção de Placas" --> OCR
-OCR --> "Fast Api Server"
 
-ESP32 --> "Hc-sr04 1"
-ESP32 --> "Hc-sr04 .."
+ESP32 -->  "Hc-sr04 1"
 ESP32 --> "Hc-sr04 N"
 @enduml
