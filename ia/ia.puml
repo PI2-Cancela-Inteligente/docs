@@ -1,0 +1,23 @@
+@startuml
+component "Raspberry Pi 3"{
+ component "Detecção de Placas" as deteccao
+ component OCR 
+ port " " as p1
+ port " " as p2
+ port " " as p3
+}
+
+component "Aplicação web"
+
+component "Motor de corrente continua" as motor
+component "Webcam KE-WBM1080P" as camera
+
+
+deteccao .. p1
+p1 -up-> camera
+deteccao --> OCR
+p2 <.up.> HTTP : use
+"Aplicação web" -- HTTP
+
+p3 -up-> motor
+@enduml
